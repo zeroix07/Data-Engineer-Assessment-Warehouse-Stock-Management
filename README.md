@@ -154,6 +154,48 @@ cd ..
   - Narasi eksekutif berbasis AI
 
 ---
+---
+
+## 💡 Tantangan & Solusi
+
+Selama pengerjaan proyek, beberapa tantangan teknis spesifik muncul:
+
+1.  **Konflik Data vs. Skema (Task 2)**
+    * **Tantangan:** Persyaratan untuk meng-inject 5% data berkualitas buruk (seperti `product_id = NULL`) bertentangan langsung dengan *constraint* `NOT NULL` pada skema database (Task 1).
+    * **Solusi:** Jenis *Data Quality issue* diubah dari `missing_id` menjadi `bad_reference_id`. Alih-alih `NULL`, skrip meng-inject `reference_id` yang tidak valid (misal `9999999`). Ini tetap menjadi DQ issue yang valid untuk dideteksi oleh ETL (Task 4) tanpa menyebabkan kegagalan saat proses *load* data.
+
+2.  **Render PDF yang Rusak (Task 4)**
+    * **Tantangan:** Laporan PDF awal yang di-generate oleh `WeasyPrint` rusak total: *layout* 2 kolom gagal, *chart* tidak muncul, dan tabel di-render sebagai teks mentah.
+    * **Solusi:**
+        1.  **Layout:** *Template* HTML dirombak total, membuang CSS `grid` yang tidak kompatibel dan beralih ke *layout* **satu kolom** yang sederhana dan 100% *PDF-friendly*.
+        2.  **Charts:** Jalur (path) ke file gambar diubah dari absolut (`/Users/pac/...`) menjadi **relatif** (`charts/chart.png`), yang memungkinkan `WeasyPrint` menemukannya.
+        3.  **Tabel:** *Template* Jinja2 dipastikan menggunakan *filter* `|safe` pada variabel tabel (`{{ peak_dow | safe }}`) agar HTML-nya di-render dengan benar.
+
+3.  **Error Timezone (Task 4)**
+    * **Tantangan:** Pipeline ETL gagal saat mencoba mengurangi *timestamp* *timezone-aware* (dari PostgreSQL `TIMESTAMPTZ`) dengan *timestamp* *timezone-naive* (dari `pd.to_datetime('now')`).
+    * **Solusi:** Menstandardisasi *timestamp* di Python agar *aware* dengan UTC menggunakan `pd.to_datetime('now', utc=True)`.
+
+---
+
+## 🧠 Pertimbangan Performa
+
+1.  **Indeks Database:** Tabel `stock_movements` adalah tabel terbesar. Indeks telah ditambahkan pada *foreign key* (`product_id`, `warehouse_id`) dan `movement_date` untuk mempercepat *join* dan *filter* pada pipeline ETL.
+2.  **Bulk Load Data:** Untuk mengimpor 1.8 juta baris data (Task 2), skrip generator membungkus semua *statement* `INSERT` dalam satu transaksi (`BEGIN`/`COMMIT`). Skrip ini juga menonaktifkan *trigger* sementara (`SET session_replication_role = 'replica'`) untuk mempercepat proses *load* secara drastis.
+3.  **Incremental Load ETL:** Pipeline ETL (Task 4) mendukung mode `--load_type incremental`, yang hanya akan memproses data dari `stock_movements` yang lebih baru dari `last_run_timestamp`. Ini jauh lebih efisien daripada melakukan *full load* setiap hari.
+4.  **Format Analitik:** Hasil ETL disimpan dalam format **Parquet**. Ini adalah format *columnar* terkompresi yang jauh lebih cepat untuk kueri analitik daripada CSV atau Excel.
+
+---
+
+## 🔮 Peningkatan di Masa Depan
+
+Meskipun fungsional, proyek ini dapat dikembangkan lebih lanjut:
+
+1.  **Orkestrasi Pipeline:** Menggunakan **Apache Airflow** atau **Dagster** untuk menjadwalkan dan meng-orkestrasi pipeline (Task 2 -> Task 3 -> Task 4) secara otomatis, lengkap dengan *retries* dan *alerting*.
+2.  **Pemisahan OLTP & OLAP:** Memisahkan database transaksional (PostgreSQL) dari *data warehouse* analitik. Pipeline ETL seharusnya memuat data ke *warehouse* khusus seperti **ClickHouse**, **BigQuery**, atau **Snowflake** untuk performa kueri analitik yang lebih cepat.
+3.  **Dashboarding Interaktif:** Mengganti laporan PDF/HTML statis dengan *dashboard* interaktif menggunakan **Metabase**, **Superset**, atau **Tableau** yang terhubung langsung ke tabel analitik.
+4.  **Transformasi berbasis SQL:** Memindahkan logika transformasi Python/Pandas ke **dbt (data build tool)**. Ini akan membuat transformasi (seperti ABC Analysis) lebih mudah diuji, didokumentasikan, dan dipelihara langsung di dalam *warehouse*.
+
+---
 
 ## 👨‍💻 Kontributor
 | Nama | Peran |
