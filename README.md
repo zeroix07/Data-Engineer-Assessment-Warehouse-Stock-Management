@@ -64,7 +64,7 @@ Pipeline Python modular yang:
 
 ### 1️⃣ Clone Repositori
 ```bash
-git clone [URL_REPO_ANDA]
+git clone https://github.com/zeroix07/Data-Engineer-Assessment-Warehouse-Stock-Management.git
 cd warehouse-stock-management
 ```
 
