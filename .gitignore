@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+/venv/
+/data_generator/.venv/
+/etl_pipeline/.venv/
+
+# File Rahasia
+.env
+/etl_pipeline/.env
+
+
+# File Sistem Operasi
+.DS_Store
