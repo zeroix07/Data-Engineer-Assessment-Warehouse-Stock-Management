@@ -1,0 +1,24 @@
+# Konfigurasi Volume Data
+volumes:
+  warehouses: 10
+  categories: 50
+  suppliers: 200
+  products: 5000
+  purchase_orders: 100000
+  po_details_avg_per_po: 3
+  sales_orders: 200000
+  so_details_avg_per_so: 3
+  stock_movements: 500000
+
+# Konfigurasi Karakteristik Data
+settings:
+  start_date: "2023-01-01"
+  end_date: "2024-12-31"
+  pareto_split: 0.2
+  pareto_volume: 0.8
+  dq_issue_percent: 0.05
+
+# Konfigurasi Output
+output:
+  directory: "output"
+  format: "sql"
