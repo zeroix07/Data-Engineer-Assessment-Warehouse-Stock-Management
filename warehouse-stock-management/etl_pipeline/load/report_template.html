@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Warehouse Analytics Report</title>
+    <style>
+        /* --- Gaya Umum --- */
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #e0e0e0; margin: 0; padding: 20px; color: #333; }
+        .a4-page { width: 210mm; min-height: 297mm; padding: 20mm; margin: 20px auto; background-color: #ffffff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); box-sizing: border-box; }
+        h1, h2, h3 { color: #2c3e50; }
+        h1 { text-align: center; margin-bottom: 15px; }
+        h2 { text-align: center; margin-top: 30px; margin-bottom: 20px; border-bottom: 2px solid #3498db; padding-bottom: 10px; page-break-after: avoid; }
+        .card { border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; margin-bottom: 20px; page-break-inside: avoid; background-color: #fdfdfd; }
+        .card h3 { margin-top: 0; color: #3498db; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 12px; text-align: center; }
+        .table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9em; }
+        .table th, .table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        .table th { background-color: #34495e; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.8em; }
+        .table tr:nth-child(even) { background-color: #f9f9f9; }
+        .table tr:hover { background-color: #f1f1f1; }
+        .table td:not(:first-child), .table th:not(:first-child) { text-align: right; }
+        img { max-width: 100%; height: auto; display: block; margin: 10px auto; }
+        ul { list-style-type: none; padding-left: 0; }
+        li { margin-bottom: 8px; font-size: 1.1em; display: flex; justify-content: space-between;}
+        li b { color: #34495e; }
+        p { font-size: 1.0em; line-height: 1.6; text-align: justify; }
+        @media print {
+            body { background-color: #ffffff; padding: 0; }
+            @page { size: A4; margin: 20mm; }
+            .a4-page { width: 100%; min-height: 100vh; margin: 0; padding: 0; box-shadow: none; background: none; }
+            img { max-width: 100% !important; page-break-inside: avoid; }
+            .table tr:hover { background-color: transparent; }
+        }
+    </style>
+</head>
+<body>
+    <div class="a4-page">
+        <h1>Warehouse Analytics Report</h1>
+        <p style="text-align: center; font-size: 0.9em; color: #777;">Laporan ini dibuat pada: {{ run_date }}</p>
+        <h2>Executive Summary</h2>
+        <div class="card">
+            <h3>Inventory Summary</h3>
+            <ul>
+                <li><span>Total Nilai Inventori:</span> <span><b>Rp {{ financial_summary.total_inventory_value | format_rupiah }}</b></span></li>
+                <li><span>Rasio Stock Turnover:</span> <span><b>{{ inventory_summary.stock_turnover_ratio | format_number(1) }}</b></span></li>
+                <li><span>Hari Stok (DOH):</span> <span><b>{{ inventory_summary.days_of_inventory_on_hand | format_number(1) }} hari</b></span></li>
+                <li><span>Item Dead Stock:</span> <span><b>{{ inventory_summary.total_dead_stock_items | format_number(0) }} SKU</b></span></li>
+                <li><span>Nilai Dead Stock:</span> <span><b>Rp {{ inventory_summary.total_dead_stock_value | format_rupiah }}</b></span></li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Analisis Naratif</h3>
+            <p>{{ summary_narrative|safe }}</p>
+        </div>
+        <h2>Movement Analytics</h2>
+        <div class="card"><h3>ABC Analysis (by Product Count)</h3><img src="{{ charts.abc_analysis_pie }}" alt="ABC Analysis Chart" style="max-width: 60%;"></div>
+        <div class="card"><h3>Monthly Sales Movements</h3><img src="{{ charts.monthly_movements }}" alt="Monthly Movements Chart"></div>
+        <div class="card"><h3>Peak Day of Week (Avg Movements)</h3>{{ peak_dow|safe }}</div>
+        <div class="card"><h3>Peak Month (Avg Movements)</h3>{{ peak_month|safe }}</div>
+        <h2>Warehouse & Financial Performance</h2>
+        <div class="card"><h3>Aktivitas Gudang (IN/OUT/TRANSFER)</h3><img src="{{ charts.warehouse_activity }}" alt="Warehouse Activity Chart"></div>
+        <div class="card"><h3>Top 10 Produk Bernilai (Berdasarkan Nilai Stok)</h3><img src="{{ charts.top_10_value_products }}" alt="Top 10 Value Products Chart"></div>
+        <div class="card"><h3>Top 10 Transfer Patterns</h3>{{ transfer_patterns|safe }}</div>
+    </div>
+</body>
+</html>
+        

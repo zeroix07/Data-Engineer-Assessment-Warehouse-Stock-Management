@@ -1,0 +1,36 @@
+# Konfigurasi Koneksi Database
+database:
+  type: "postgresql"
+  user: "postgres"
+  password: "mysecretpassword"
+  host: "localhost"
+  port: 5432
+  db_name: "postgres" # Ganti ini jika Anda menggunakan db_name spesifik
+
+# Konfigurasi ETL
+etl_settings:
+  # Digunakan untuk incremental load
+  # Pipeline akan mengambil data dari 'stock_movements' > tanggal ini
+  # Dalam skenario nyata, ini akan diperbarui oleh orchestrator
+  last_run_timestamp: "2023-01-01 00:00:00"
+  
+  # Parameter untuk modul Transform
+  dead_stock_days: 180
+  abc_analysis:
+    A_percent: 0.8  # 80%
+    B_percent: 0.15 # 15%
+    C_percent: 0.05 # 5%
+
+# Konfigurasi Output
+output:
+  # Direktori untuk menyimpan file analitik
+  analytics_dir: "analytics_output"
+  
+  # Format file analitik (parquet, csv, atau excel)
+  format: "parquet"
+  
+  # Nama untuk tabel summary di database
+  summary_table_name: "analytics_daily_summary"
+  
+  # Nama file laporan
+  report_filename: "warehouse_summary_report" # akan menjadi .html/.pdf

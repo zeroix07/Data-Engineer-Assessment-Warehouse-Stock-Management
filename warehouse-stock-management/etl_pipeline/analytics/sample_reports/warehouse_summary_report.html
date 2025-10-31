@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Warehouse Analytics Report</title>
+    <style>
+        /* --- Gaya Umum --- */
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #e0e0e0; margin: 0; padding: 20px; color: #333; }
+        .a4-page { width: 210mm; min-height: 297mm; padding: 20mm; margin: 20px auto; background-color: #ffffff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); box-sizing: border-box; }
+        h1, h2, h3 { color: #2c3e50; }
+        h1 { text-align: center; margin-bottom: 15px; }
+        h2 { text-align: center; margin-top: 30px; margin-bottom: 20px; border-bottom: 2px solid #3498db; padding-bottom: 10px; page-break-after: avoid; }
+        .card { border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; margin-bottom: 20px; page-break-inside: avoid; background-color: #fdfdfd; }
+        .card h3 { margin-top: 0; color: #3498db; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 12px; text-align: center; }
+        .table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9em; }
+        .table th, .table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        .table th { background-color: #34495e; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.8em; }
+        .table tr:nth-child(even) { background-color: #f9f9f9; }
+        .table tr:hover { background-color: #f1f1f1; }
+        .table td:not(:first-child), .table th:not(:first-child) { text-align: right; }
+        img { max-width: 100%; height: auto; display: block; margin: 10px auto; }
+        ul { list-style-type: none; padding-left: 0; }
+        li { margin-bottom: 8px; font-size: 1.1em; display: flex; justify-content: space-between;}
+        li b { color: #34495e; }
+        p { font-size: 1.0em; line-height: 1.6; text-align: justify; }
+        @media print {
+            body { background-color: #ffffff; padding: 0; }
+            @page { size: A4; margin: 20mm; }
+            .a4-page { width: 100%; min-height: 100vh; margin: 0; padding: 0; box-shadow: none; background: none; }
+            img { max-width: 100% !important; page-break-inside: avoid; }
+            .table tr:hover { background-color: transparent; }
+        }
+    </style>
+</head>
+<body>
+    <div class="a4-page">
+        <h1>Warehouse Analytics Report</h1>
+        <p style="text-align: center; font-size: 0.9em; color: #777;">Laporan ini dibuat pada: 2025-10-31 10:00:31</p>
+        <h2>Executive Summary</h2>
+        <div class="card">
+            <h3>Inventory Summary</h3>
+            <ul>
+                <li><span>Total Nilai Inventori:</span> <span><b>Rp 11.673.046.155.359,04</b></span></li>
+                <li><span>Rasio Stock Turnover:</span> <span><b>3.590,8</b></span></li>
+                <li><span>Hari Stok (DOH):</span> <span><b>0,2 hari</b></span></li>
+                <li><span>Item Dead Stock:</span> <span><b>47.365 SKU</b></span></li>
+                <li><span>Nilai Dead Stock:</span> <span><b>Rp 11.673.046.155.359,04</b></span></li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Analisis Naratif</h3>
+            <p><b>Temuan kritis:</b> Dengan total nilai inventori Rp 11,67 triliun dan persentase dead stock mencapai 94,7% (47.365 SKU), perusahaan menghadapi masalah serius dalam efisiensi pengelolaan inventori, sehingga mempengaruhi arus kas dan daya saing. 
+
+<br><br> 
+<b>Rekomendasi utama:</b> Segera lakukan analisis mendalam dan strategi likuidasi untuk mengurangi angka dead stock, serta optimalkan proses pengadaan dan penjualan untuk meningkatkan rasio perputaran stok guna memaksimalkan nilai inventori yang ada.</p>
+        </div>
+        <h2>Movement Analytics</h2>
+        <div class="card"><h3>ABC Analysis (by Product Count)</h3><img src="charts/abc_analysis_pie.png" alt="ABC Analysis Chart" style="max-width: 60%;"></div>
+        <div class="card"><h3>Monthly Sales Movements</h3><img src="charts/monthly_movements.png" alt="Monthly Movements Chart"></div>
+        <div class="card"><h3>Peak Day of Week (Avg Movements)</h3><table border="1" class="dataframe table table-sm">
+  <thead>
+    <tr style="text-align: right;">
+      <th>day_of_week</th>
+      <th>daily_movements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Sunday</td>
+      <td>300.095238</td>
+    </tr>
+    <tr>
+      <td>Thursday</td>
+      <td>299.826923</td>
+    </tr>
+    <tr>
+      <td>Saturday</td>
+      <td>299.528846</td>
+    </tr>
+    <tr>
+      <td>Friday</td>
+      <td>299.500000</td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>297.519231</td>
+    </tr>
+    <tr>
+      <td>Monday</td>
+      <td>296.095238</td>
+    </tr>
+    <tr>
+      <td>Tuesday</td>
+      <td>291.676190</td>
+    </tr>
+  </tbody>
+</table></div>
+        <div class="card"><h3>Peak Month (Avg Movements)</h3><table border="1" class="dataframe table table-sm">
+  <thead>
+    <tr style="text-align: right;">
+      <th>month_name</th>
+      <th>monthly_movements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>December</td>
+      <td>17001.5</td>
+    </tr>
+    <tr>
+      <td>June</td>
+      <td>13655.5</td>
+    </tr>
+    <tr>
+      <td>May</td>
+      <td>10290.0</td>
+    </tr>
+    <tr>
+      <td>July</td>
+      <td>10173.0</td>
+    </tr>
+    <tr>
+      <td>November</td>
+      <td>10163.0</td>
+    </tr>
+    <tr>
+      <td>March</td>
+      <td>6897.0</td>
+    </tr>
+    <tr>
+      <td>April</td>
+      <td>6889.5</td>
+    </tr>
+    <tr>
+      <td>February</td>
+      <td>6836.5</td>
+    </tr>
+    <tr>
+      <td>September</td>
+      <td>6789.5</td>
+    </tr>
+    <tr>
+      <td>October</td>
+      <td>6713.5</td>
+    </tr>
+    <tr>
+      <td>January</td>
+      <td>6713.0</td>
+    </tr>
+    <tr>
+      <td>August</td>
+      <td>6702.5</td>
+    </tr>
+  </tbody>
+</table></div>
+        <h2>Warehouse & Financial Performance</h2>
+        <div class="card"><h3>Aktivitas Gudang (IN/OUT/TRANSFER)</h3><img src="charts/warehouse_activity.png" alt="Warehouse Activity Chart"></div>
+        <div class="card"><h3>Top 10 Produk Bernilai (Berdasarkan Nilai Stok)</h3><img src="charts/top_10_value_products.png" alt="Top 10 Value Products Chart"></div>
+        <div class="card"><h3>Top 10 Transfer Patterns</h3><table border="1" class="dataframe table table-sm">
+  <thead>
+    <tr style="text-align: right;">
+      <th>from_warehouse_id</th>
+      <th>to_warehouse_id</th>
+      <th>total_transfers</th>
+      <th>total_qty</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>6</td>
+      <td>2</td>
+      <td>587</td>
+      <td>15545</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>9</td>
+      <td>571</td>
+      <td>14589</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>6</td>
+      <td>570</td>
+      <td>14892</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>8</td>
+      <td>566</td>
+      <td>14896</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>9</td>
+      <td>557</td>
+      <td>14183</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>10</td>
+      <td>552</td>
+      <td>14179</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>3</td>
+      <td>549</td>
+      <td>13504</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>3</td>
+      <td>549</td>
+      <td>13534</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>4</td>
+      <td>549</td>
+      <td>13852</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>6</td>
+      <td>548</td>
+      <td>14218</td>
+    </tr>
+  </tbody>
+</table></div>
+    </div>
+</body>
+</html>
+        

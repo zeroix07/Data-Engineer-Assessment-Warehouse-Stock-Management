@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Warehouse Analytics Report</title>
+    <style>
+        /* --- Gaya Umum --- */
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #e0e0e0; margin: 0; padding: 20px; color: #333; }
+        .a4-page { width: 210mm; min-height: 297mm; padding: 20mm; margin: 20px auto; background-color: #ffffff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); box-sizing: border-box; }
+        h1, h2, h3 { color: #2c3e50; }
+        h1 { text-align: center; margin-bottom: 15px; }
+        h2 { text-align: center; margin-top: 30px; margin-bottom: 20px; border-bottom: 2px solid #3498db; padding-bottom: 10px; page-break-after: avoid; }
+        .card { border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; margin-bottom: 20px; page-break-inside: avoid; background-color: #fdfdfd; }
+        .card h3 { margin-top: 0; color: #3498db; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 12px; text-align: center; }
+        .table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9em; }
+        .table th, .table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        .table th { background-color: #34495e; color: #ffffff; font-weight: 600; text-transform: uppercase; font-size: 0.8em; }
+        .table tr:nth-child(even) { background-color: #f9f9f9; }
+        .table tr:hover { background-color: #f1f1f1; }
+        .table td:not(:first-child), .table th:not(:first-child) { text-align: right; }
+        img { max-width: 100%; height: auto; display: block; margin: 10px auto; }
+        ul { list-style-type: none; padding-left: 0; }
+        li { margin-bottom: 8px; font-size: 1.1em; display: flex; justify-content: space-between;}
+        li b { color: #34495e; }
+        p { font-size: 1.0em; line-height: 1.6; text-align: justify; }
+        @media print {
+            body { background-color: #ffffff; padding: 0; }
+            @page { size: A4; margin: 20mm; }
+            .a4-page { width: 100%; min-height: 100vh; margin: 0; padding: 0; box-shadow: none; background: none; }
+            img { max-width: 100% !important; page-break-inside: avoid; }
+            .table tr:hover { background-color: transparent; }
+        }
+    </style>
+</head>
+<body>
+    <div class="a4-page">
+        <h1>Warehouse Analytics Report</h1>
+        <p style="text-align: center; font-size: 0.9em; color: #777;">Laporan ini dibuat pada: 2025-10-31 09:39:02</p>
+        <h2>Executive Summary</h2>
+        <div class="card">
+            <h3>Inventory Summary</h3>
+            <ul>
+                <li><span>Total Nilai Inventori:</span> <span><b>Rp 5.100.000.000,00</b></span></li>
+                <li><span>Rasio Stock Turnover:</span> <span><b>2,5</b></span></li>
+                <li><span>Hari Stok (DOH):</span> <span><b>146,0 hari</b></span></li>
+                <li><span>Item Dead Stock:</span> <span><b>450 SKU</b></span></li>
+                <li><span>Nilai Dead Stock:</span> <span><b>Rp 2.500.000.000,00</b></span></li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Analisis Naratif</h3>
+            <p><p><b>Error:</b> Klien OpenAI tidak dapat diinisialisasi. Periksa API Key dan koneksi.</p></p>
+        </div>
+        <h2>Movement Analytics</h2>
+        <div class="card"><h3>ABC Analysis (by Product Count)</h3><img src="charts/abc_analysis_pie.png" alt="ABC Analysis Chart" style="max-width: 60%;"></div>
+        <div class="card"><h3>Monthly Sales Movements</h3><img src="charts/monthly_movements.png" alt="Monthly Movements Chart"></div>
+        <div class="card"><h3>Peak Day of Week (Avg Movements)</h3><table border="1" class="dataframe table table-sm">
+  <thead>
+    <tr style="text-align: right;">
+      <th>day_of_week</th>
+      <th>avg_movements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Monday</td>
+      <td>805</td>
+    </tr>
+    <tr>
+      <td>Tuesday</td>
+      <td>1049</td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>1109</td>
+    </tr>
+    <tr>
+      <td>Thursday</td>
+      <td>807</td>
+    </tr>
+    <tr>
+      <td>Friday</td>
+      <td>1075</td>
+    </tr>
+  </tbody>
+</table></div>
+        <div class="card"><h3>Peak Month (Avg Movements)</h3><table border="1" class="dataframe table table-sm">
+  <thead>
+    <tr style="text-align: right;">
+      <th>month</th>
+      <th>avg_movements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Jan</td>
+      <td>9614</td>
+    </tr>
+    <tr>
+      <td>Feb</td>
+      <td>9918</td>
+    </tr>
+    <tr>
+      <td>Mar</td>
+      <td>9674</td>
+    </tr>
+    <tr>
+      <td>Apr</td>
+      <td>9690</td>
+    </tr>
+    <tr>
+      <td>May</td>
+      <td>9445</td>
+    </tr>
+    <tr>
+      <td>Jun</td>
+      <td>9200</td>
+    </tr>
+  </tbody>
+</table></div>
+        <h2>Warehouse & Financial Performance</h2>
+        <div class="card"><h3>Aktivitas Gudang (IN/OUT/TRANSFER)</h3><img src="charts/warehouse_activity.png" alt="Warehouse Activity Chart"></div>
+        <div class="card"><h3>Top 10 Produk Bernilai (Berdasarkan Nilai Stok)</h3><img src="charts/top_10_value_products.png" alt="Top 10 Value Products Chart"></div>
+        <div class="card"><h3>Top 10 Transfer Patterns</h3><table border="1" class="dataframe table table-sm">
+  <thead>
+    <tr style="text-align: right;">
+      <th>from_warehouse</th>
+      <th>to_warehouse</th>
+      <th>total_transfers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>WH-B</td>
+      <td>WH-A</td>
+      <td>74</td>
+    </tr>
+    <tr>
+      <td>WH-C</td>
+      <td>WH-B</td>
+      <td>42</td>
+    </tr>
+    <tr>
+      <td>WH-C</td>
+      <td>WH-C</td>
+      <td>72</td>
+    </tr>
+    <tr>
+      <td>WH-A</td>
+      <td>WH-C</td>
+      <td>136</td>
+    </tr>
+    <tr>
+      <td>WH-B</td>
+      <td>WH-B</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <td>WH-B</td>
+      <td>WH-C</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <td>WH-A</td>
+      <td>WH-A</td>
+      <td>30</td>
+    </tr>
+  </tbody>
+</table></div>
+    </div>
+</body>
+</html>
+        
